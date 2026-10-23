@@ -8,5 +8,13 @@
     "url": "https://github.com/knQzx"
   },
   "license": "MIT",
-  "keywords": ["macos", "notch", "notifications", "permissions", "sessions"]
+  "keywords": [
+    "macos",
+    "notch",
+    "notifications",
+    "permissions",
+    "sessions"
+  ],
+  "homepage": "https://github.com/knQzx/earshot",
+  "repository": "https://github.com/knQzx/earshot"
 }
