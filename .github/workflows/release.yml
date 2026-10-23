@@ -1,0 +1,94 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 26
+        run: |
+          xcode=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
+          sudo xcode-select -s "$xcode"
+          echo "using $xcode"
+
+      - name: Check that VERSION matches the tag
+        run: |
+          version=$(tr -d '[:space:]' < VERSION)
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "VERSION is $version but the tag is $GITHUB_REF_NAME" >&2
+            exit 1
+          fi
+
+      - name: Toolchain
+        run: |
+          swift --version
+          sdk=$(xcrun --sdk macosx --show-sdk-version)
+          echo "macOS SDK $sdk"
+          case "$sdk" in 2[6-9]*|[3-9][0-9]*) ;; *) echo "need the macOS 26 SDK, got $sdk" >&2; exit 1 ;; esac
+
+      - name: Test
+        run: make test
+
+      - name: No network code
+        run: make check-no-network
+
+      - name: Universal app
+        run: UNIVERSAL=1 scripts/bundle.sh release
+
+      - name: Signature
+        run: codesign --verify --strict --verbose=2 build/Earshot.app
+
+      - name: Zip
+        run: |
+          cd build
+          ditto -c -k --keepParent Earshot.app "Earshot-$GITHUB_REF_NAME.zip"
+          shasum -a 256 "Earshot-$GITHUB_REF_NAME.zip" > "Earshot-$GITHUB_REF_NAME.zip.sha256"
+
+      - name: Release notes
+        run: |
+          version=${GITHUB_REF_NAME#v}
+          awk -v v="$version" '
+            $0 ~ "^## \\[" v "\\]" { on = 1; next }
+            on && /^## / { exit }
+            on { print }
+          ' CHANGELOG.md > build/notes.md
+          cat >> build/notes.md <<'NOTES'
+
+          ### Install
+
+          Unzip, move `Earshot.app` to `~/Applications`, open it once, then run:
+
+              ~/Applications/Earshot.app/Contents/MacOS/earshot-hook --install
+
+          The app is ad-hoc signed and not notarized. macOS will block the first launch:
+          open System Settings > Privacy & Security and click "Open Anyway", or run
+          `xattr -dr com.apple.quarantine ~/Applications/Earshot.app`.
+          NOTES
+          cat build/notes.md
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Earshot-${{ github.ref_name }}
+          path: build/Earshot-${{ github.ref_name }}.zip*
+          if-no-files-found: error
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "build/Earshot-$GITHUB_REF_NAME.zip" \
+            "build/Earshot-$GITHUB_REF_NAME.zip.sha256" \
+            --title "Earshot $GITHUB_REF_NAME" \
+            --notes-file build/notes.md \
+            --verify-tag

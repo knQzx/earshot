@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Live Activity: approval</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#D97757}a:hover{color:#E8957A}
+@keyframes es-ring{0%{transform:scale(1);opacity:.9}70%{transform:scale(1.55);opacity:0}100%{transform:scale(1.55);opacity:0}}
+.es-ring{animation:es-ring 1.8s ease-out infinite}
+.es-wall{background:radial-gradient(60% 80% at 15% 20%, #3B5BDB 0%, transparent 60%),radial-gradient(50% 70% at 85% 30%, #C2255C 0%, transparent 60%),radial-gradient(70% 80% at 60% 100%, #F08C00 0%, transparent 65%),#1A1B2E}
+.es-glass{background:rgba(30,30,34,0.52);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%)}
+@keyframes es-hop{0%,62%,100%{transform:translateY(0)}70%{transform:translateY(-3px)}80%{transform:translateY(0)}86%{transform:translateY(-1.5px)}92%{transform:translateY(0)}}
+.es-hop{animation:es-hop 2.2s ease-in-out infinite}
+</style>
+</helmet>
+<div class="es-wall" style="width: 1200px; height: 220px; position: relative; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif; color: #F5F5F7">
+<div class="es-glass" style="position: absolute; left: 0; top: 0; width: 1200px; height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; box-sizing: border-box; font-size: 13px; color: rgba(255,255,255,0.92)">
+<div style="display: flex; gap: 20px; align-items: center"><span style="font-weight: 600">Terminal</span><span>Shell</span><span>Edit</span><span>View</span><span>Window</span></div>
+<div style="display: flex; gap: 16px; align-items: center"><span>Thu Oct 22</span><span>10:41 PM</span></div>
+</div>
+<div style="position: absolute; left: 380px; top: 0; width: 440px; height: 40px; background: #000000; border-radius: 0 0 20px 20px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px 0 12px; box-sizing: border-box; box-shadow: 0 10px 30px rgba(0,0,0,0.45)">
+<div style="display: flex; align-items: center; gap: 8px; width: 112px">
+<div style="position: relative; width: 24px; height: 24px; flex: none">
+<div class="es-ring" style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid #D97757"></div>
+<div style="position: absolute; inset: 0; border-radius: 50%; background: #1C1C1E; display: flex; align-items: center; justify-content: center">
+<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#D97757" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; line-height: 1.15; min-width: 0">
+<span style="font-size: 12px; font-weight: 600; white-space: nowrap">claude-notch</span>
+<span style="font-size: 10.5px; color: rgba(235,235,245,0.6); white-space: nowrap">Bash</span>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 6px; justify-content: flex-end; width: 112px">
+<span style="display: inline-flex; align-items: center; gap: 5px; height: 20px; padding: 0 8px; border-radius: 10px; background: rgba(10,132,255,0.18); color: #64A8FF; font-size: 11px; font-weight: 600"><span style="width: 6px; height: 6px; border-radius: 3px; background: #0A84FF"></span>Work</span>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":220}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

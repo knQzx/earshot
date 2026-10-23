@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Drag to group</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#D97757}a:hover{color:#E8957A}
+@keyframes es-spin{to{transform:rotate(360deg)}}
+.es-spin{animation:es-spin 6s linear infinite}
+.es-none{}
+.es-wall{background:radial-gradient(60% 80% at 15% 20%, #3B5BDB 0%, transparent 60%),radial-gradient(50% 70% at 85% 30%, #C2255C 0%, transparent 60%),radial-gradient(70% 80% at 60% 100%, #F08C00 0%, transparent 65%),#1A1B2E}
+.es-glass{background:rgba(30,30,34,0.52);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%)}
+@keyframes es-hop{0%,62%,100%{transform:translateY(0)}70%{transform:translateY(-3px)}80%{transform:translateY(0)}86%{transform:translateY(-1.5px)}92%{transform:translateY(0)}}
+.es-hop{animation:es-hop 2.2s ease-in-out infinite}
+</style>
+</helmet>
+<div class="es-wall" style="width: 1200px; height: 820px; position: relative; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif; color: #F5F5F7">
+<div class="es-glass" style="position: absolute; left: 100px; top: 60px; width: 440px; border-radius: 26px; box-shadow: 0 0 0 0.5px rgba(255,255,255,0.18), 0 20px 50px rgba(0,0,0,0.35); padding: 14px 10px 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px">
+<span style="width: 8px; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.3)"></span>
+<span style="font-size: 13px; font-weight: 600">Ungrouped</span>
+<span style="font-size: 12px; color: rgba(255,255,255,0.45)">3</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 10px; border-radius: 14px">
+<span style="width: 30px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><g stroke="rgba(245,245,247,0.32)" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span>
+<span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13.5px; font-weight: 600">notes-app</span><span style="font-size: 12px; color: rgba(255,255,255,0.4)">Idle · 40 min</span></span>
+</div>
+<div style="position: relative; height: 54px">
+<div style="position: absolute; inset: 0; display: flex; align-items: center; gap: 12px; padding: 0 10px; border-radius: 14px; background: rgba(255,255,255,0.1); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.35)">
+<span style="width: 30px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><g stroke="rgba(255,255,255,0.75)" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span>
+<span style="display: flex; flex-direction: column; gap: 3px; flex: 1"><span style="font-size: 13.5px; font-weight: 600">mobile-app</span><span style="font-size: 12px; color: rgba(255,255,255,0.55)">No activity · 7 min</span></span>
+<span style="font-size: 12px; color: #F5F5F7; font-weight: 500">Create group</span>
+</div>
+<div style="position: absolute; left: 34px; top: 22px; width: 370px; height: 54px; display: flex; align-items: center; gap: 12px; padding: 0 10px; box-sizing: border-box; border-radius: 14px; background: rgba(72,72,80,0.92); box-shadow: 0 18px 40px rgba(0,0,0,0.6); transform: scale(1.03) rotate(-1.2deg)">
+<span style="width: 30px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; flex: none"><svg class="es-spin" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#F5F5F7" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span>
+<span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13.5px; font-weight: 600">auth-service</span><span style="font-size: 12px; color: rgba(255,255,255,0.55)">Working · just now</span></span>
+</div>
+</div>
+<div style="height: 30px"></div>
+</div>
+<div class="es-glass" style="position: absolute; left: 660px; top: 60px; width: 440px; border-radius: 26px; box-shadow: 0 0 0 0.5px rgba(255,255,255,0.18), 0 20px 50px rgba(0,0,0,0.35); padding: 14px 10px 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="background: rgba(255,255,255,0.08); border-radius: 20px; padding: 14px; display: flex; flex-direction: column; gap: 12px">
+<label for="es-group-name" style="font-size: 12px; color: rgba(255,255,255,0.55)">New group</label>
+<input id="es-group-name" type="text" value="Open Source" style="all: unset; height: 36px; padding: 0 12px; border-radius: 12px; background: rgba(0,0,0,0.3); box-shadow: inset 0 0 0 1.5px rgba(10,132,255,0.9); font-size: 15px; font-weight: 600; color: #F5F5F7"></input>
+<div style="display: flex; align-items: center; gap: 10px">
+<sc-for list="{{swatches}}" as="c" hint-placeholder-count="8">
+<button type="button" aria-label="{{c.name}}" style="appearance: none; border: 0; margin: 0; font-family: inherit; font-size: inherit; color: inherit; text-align: left; cursor: default; width: 22px; height: 22px; border-radius: 11px; background: {{c.hex}}; box-shadow: {{c.ring}}"></button>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{presets}}" as="p" hint-placeholder-count="4">
+<button type="button" style="appearance: none; border: 0; margin: 0; font-family: inherit; font-size: inherit; color: inherit; text-align: left; cursor: default; height: 26px; padding: 0 10px; border-radius: 13px; background: rgba(255,255,255,0.12); font-size: 12px; color: rgba(245,245,247,0.85); display: flex; align-items: center; gap: 6px"><span style="width: 6px; height: 6px; border-radius: 3px; background: {{p.hex}}"></span>{{p.name}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 10px">
+<span style="width: 8px; height: 8px; border-radius: 4px; background: #30D158"></span>
+<span style="font-size: 13px; font-weight: 600">Open Source</span>
+<span style="font-size: 12px; color: rgba(255,255,255,0.45)">2</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 10px">
+<span style="width: 30px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><g stroke="rgba(255,255,255,0.75)" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span>
+<span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13.5px; font-weight: 600">mobile-app</span><span style="font-size: 12px; color: rgba(255,255,255,0.75)">No activity · 7 min</span></span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 10px">
+<span style="width: 30px; height: 30px; border-radius: 50%; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; flex: none"><svg class="es-spin" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#F5F5F7" stroke-width="2.6" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span>
+<span style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13.5px; font-weight: 600">auth-service</span><span style="font-size: 12px; color: rgba(255,255,255,0.55)">Working · just now</span></span>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":820}}'>
+class Component extends DCLogic {
+renderVals() {
+const sel = '0 0 0 2px rgba(30,30,34,0.9), 0 0 0 4px #FFFFFF';
+const sw = [['Blue','#0A84FF'],['Indigo','#5E5CE6'],['Purple','#BF5AF2'],['Pink','#FF375F'],['Teal','#64D2FF'],['Mint','#30D158'],['Yellow','#FFD60A'],['Gray','#8E8E93']];
+return {
+swatches: sw.map(([name, hex]) => ({ name, hex, ring: name === 'Mint' ? sel : 'none' })),
+presets: [{ name: 'Work', hex: '#0A84FF' }, { name: 'Study', hex: '#BF5AF2' }, { name: 'Research', hex: '#64D2FF' }, { name: 'Open Source', hex: '#30D158' }]
+};
+}
+}
+</script>
+</body>
+</html>

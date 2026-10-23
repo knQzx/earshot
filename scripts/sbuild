@@ -1,0 +1,21 @@
+#!/bin/sh
+# usage: scripts/sbuild build|test [args...]   or   scripts/sbuild path/to/script.swift [args...]
+# One compile at a time across all worktrees (lockf), low priority, 4 jobs.
+cd "$(dirname "$0")/.." || exit 1
+
+case "$1" in
+    *.swift) jobs="" ;;
+    *) jobs="-j 4" ;;
+esac
+
+common=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+case "$common" in
+    */.git) lockdir=$(dirname "$common") ;;
+    "") lockdir="" ;;
+    *) lockdir=$common ;;
+esac
+
+if [ -n "$lockdir" ] && [ -d "$lockdir" ] && [ -w "$lockdir" ] && command -v lockf >/dev/null 2>&1; then
+    exec lockf -k "$lockdir/.build-lock" nice -n 10 swift "$@" $jobs
+fi
+exec nice -n 10 swift "$@" $jobs

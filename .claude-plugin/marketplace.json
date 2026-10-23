@@ -1,0 +1,16 @@
+{
+  "name": "earshot",
+  "description": "Earshot: every Claude Code session in your MacBook notch",
+  "owner": {
+    "name": "knQzx",
+    "url": "https://github.com/knQzx"
+  },
+  "plugins": [
+    {
+      "name": "earshot",
+      "source": "./plugin",
+      "description": "Connects Claude Code to the Earshot macOS app: session status, approvals and policy rules in the notch",
+      "category": "productivity"
+    }
+  ]
+}

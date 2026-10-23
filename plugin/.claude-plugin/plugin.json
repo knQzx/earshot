@@ -1,0 +1,12 @@
+{
+  "name": "earshot",
+  "displayName": "Earshot",
+  "version": "0.1.0",
+  "description": "Connects Claude Code to the Earshot macOS app: session status, approvals and policy rules in the notch. Requires Earshot.app in ~/Applications or /Applications.",
+  "author": {
+    "name": "Kirill Novikov",
+    "url": "https://github.com/knQzx"
+  },
+  "license": "MIT",
+  "keywords": ["macos", "notch", "notifications", "permissions", "sessions"]
+}

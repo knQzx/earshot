@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Panel with groups</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#D97757}a:hover{color:#E8957A}
+@keyframes es-spin{to{transform:rotate(360deg)}}
+@keyframes es-breathe{0%,100%{opacity:.45}50%{opacity:1}}
+@keyframes es-ring{0%{transform:scale(1);opacity:.9}70%{transform:scale(1.5);opacity:0}100%{transform:scale(1.5);opacity:0}}
+.es-spin{animation:es-spin 6s linear infinite}
+.es-breathe{animation:es-breathe 2.4s ease-in-out infinite}
+.es-ring{animation:es-ring 1.8s ease-out infinite}
+@keyframes es-hop{0%,62%,100%{transform:translateY(0)}70%{transform:translateY(-3px)}80%{transform:translateY(0)}86%{transform:translateY(-1.5px)}92%{transform:translateY(0)}}
+.es-hop{animation:es-hop 2.2s ease-in-out infinite}
+.es-none{}
+.es-wall{background:radial-gradient(60% 80% at 15% 20%, #3B5BDB 0%, transparent 60%),radial-gradient(50% 70% at 85% 30%, #C2255C 0%, transparent 60%),radial-gradient(70% 80% at 60% 100%, #F08C00 0%, transparent 65%),#1A1B2E}
+.es-glass{background:rgba(30,30,34,0.52);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%)}
+.es-row{background:transparent}
+.es-row:hover{background:rgba(255,255,255,0.08)}
+.es-btn{background:transparent}
+.es-btn:hover{background:rgba(255,255,255,0.1)}
+</style>
+</helmet>
+<div class="es-wall" style="width: 1200px; height: 820px; position: relative; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif; color: #FFFFFF">
+<div class="es-glass" style="position: absolute; left: 0; top: 0; width: 1200px; height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; box-sizing: border-box; font-size: 13px; color: rgba(255,255,255,0.92)">
+<div style="display: flex; gap: 20px; align-items: center"><span style="font-weight: 600">Terminal</span><span>Shell</span><span>Edit</span><span>View</span><span>Window</span></div>
+<div style="display: flex; gap: 16px; align-items: center"><span>Thu Oct 22</span><span>10:41 PM</span></div>
+</div>
+<div style="position: absolute; left: 466px; top: 0; width: 268px; height: 32px; background: #000000; border-radius: 0 0 11px 11px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; box-sizing: border-box">
+<span style="width: 20px; height: 20px; border-radius: 50%; background: #1C1C1E; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#D97757" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span>
+<span style="height: 18px; min-width: 18px; padding: 0 6px; box-sizing: border-box; border-radius: 9px; background: #D97757; color: #000000; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span>
+</div>
+<div class="es-glass" style="position: absolute; left: 380px; top: 40px; width: 440px; border-radius: 26px; box-shadow: 0 0 0 0.5px rgba(255,255,255,0.18), 0 20px 50px rgba(0,0,0,0.35); padding: 8px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; justify-content: space-between; height: 30px; padding: 4px 8px 0 10px; box-sizing: border-box">
+<span style="display: flex; align-items: baseline; gap: 6px"><span style="font-size: 13px; font-weight: 600">Sessions</span><span style="font-size: 12px; color: rgba(255,255,255,0.55)">7</span></span>
+<span style="font-size: 11.5px; font-weight: 600; color: #FFB38F">1 needs you</span>
+</div>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+<div style="background: rgba(255,255,255,0.08); border-radius: 18px; padding: 4px; display: flex; flex-direction: column">
+<button type="button" class="es-btn" style="appearance: none; border: 0; margin: 0; font-family: inherit; font-size: inherit; color: inherit; text-align: left; cursor: default; display: flex; align-items: center; gap: 7px; height: 26px; padding: 0 8px; border-radius: 12px">
+<span style="width: 7px; height: 7px; border-radius: 4px; background: {{g.color}}; flex: none"></span>
+<span style="font-size: 12px; font-weight: 600">{{g.name}}</span>
+<sc-if value="{{g.open}}" hint-placeholder-val="{{ true }}"><span style="font-size: 11.5px; color: rgba(255,255,255,0.45)">{{g.count}}</span></sc-if>
+<sc-if value="{{g.folded}}" hint-placeholder-val="{{ false }}">
+<span style="display: flex; align-items: center; padding-left: 5px">
+<sc-for list="{{g.minis}}" as="m" hint-placeholder-count="3">
+<span class="{{m.hop}}" style="position: relative; width: 18px; height: 18px; margin-left: -3px; flex: none">
+<span class="{{m.ring}}" style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid {{m.ringColor}}"></span>
+<span style="position: absolute; inset: 0; border-radius: 50%; background: #1C1C1E; box-shadow: 0 0 0 1.5px rgba(40,40,46,0.9); display: flex; align-items: center; justify-content: center">
+<svg class="{{m.anim}}" width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><g stroke="{{m.spark}}" stroke-width="3" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg>
+</span>
+</span>
+</sc-for>
+</span>
+</sc-if>
+<span style="flex: 1"></span>
+<span style="font-size: 11px; color: {{g.noteColor}}">{{g.note}}</span>
+<svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true" style="transform: {{g.chevron}}"><path d="M6 9l6 6 6-6" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<sc-for list="{{g.rows}}" as="s" hint-placeholder-count="2">
+<button type="button" class="es-row" style="appearance: none; border: 0; margin: 0; font-family: inherit; font-size: inherit; color: inherit; text-align: left; cursor: default; display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 8px; border-radius: 14px; box-sizing: border-box">
+<span class="{{s.hop}}" style="position: relative; width: 24px; height: 24px; flex: none">
+<span class="{{s.ring}}" style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid {{s.ringColor}}"></span>
+<span style="position: absolute; inset: 0; border-radius: 50%; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center">
+<svg class="{{s.anim}}" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><g stroke="{{s.spark}}" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg>
+</span>
+</span>
+<span style="display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1">
+<span style="font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{s.project}}</span>
+<span style="font-size: 11.5px; color: rgba(255,255,255,0.58); white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{s.title}}</span>
+</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 1px; flex: none">
+<span style="font-size: 12px; font-weight: 500; color: {{s.labelColor}}; white-space: nowrap">{{s.label}}</span>
+<span style="font-size: 11px; color: rgba(255,255,255,0.5); font-variant-numeric: tabular-nums">{{s.time}}</span>
+</span>
+</button>
+</sc-for>
+</div>
+</sc-for>
+<div style="display: flex; align-items: center; justify-content: space-between; height: 32px; padding: 2px 2px 0">
+<button type="button" aria-label="Memory and CPU" class="es-btn" style="appearance: none; border: 0; margin: 0; font-family: inherit; font-size: inherit; color: inherit; text-align: left; cursor: default; display: flex; align-items: center; gap: 7px; height: 26px; padding: 0 9px; border-radius: 8px">
+<svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="1.9" stroke-linecap="round"><rect x="6" y="6" width="12" height="12" rx="2"></rect><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path></g></svg>
+<span style="font-size: 11.5px; color: rgba(255,255,255,0.75)">12 of 16 GB</span>
+<svg width="10" height="10" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+<button type="button" aria-label="Settings" class="es-btn" style="appearance: none; border: 0; margin: 0; font-family: inherit; font-size: inherit; color: inherit; text-align: left; cursor: default; width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center">
+<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="rgba(255,255,255,0.65)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"></path></g></svg>
+</button>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":820}}'>
+class Component extends DCLogic {
+renderVals() {
+const st = {
+approval: { anim: 'es-none', hop: 'es-hop', spark: '#E8957A', ring: 'es-ring', ringColor: '#E8957A', label: 'Needs approval', labelColor: '#FFB38F' },
+review: { anim: 'es-none', hop: 'es-hop', spark: '#E8957A', ring: 'es-none', ringColor: 'transparent', label: 'Ready for review', labelColor: '#FFB38F' },
+work: { anim: 'es-spin', hop: 'es-none', spark: '#FFFFFF', ring: 'es-none', ringColor: 'transparent', label: 'Working', labelColor: 'rgba(255,255,255,0.75)' },
+stalled: { anim: 'es-breathe', hop: 'es-none', spark: 'rgba(255,255,255,0.75)', ring: 'es-none', ringColor: 'transparent', label: 'No activity', labelColor: 'rgba(255,255,255,0.75)' },
+idle: { anim: 'es-none', hop: 'es-none', spark: 'rgba(255,255,255,0.38)', ring: 'es-none', ringColor: 'transparent', label: 'Idle', labelColor: 'rgba(255,255,255,0.5)' }
+};
+const row = (project, title, time, kind) => ({ project, title, time, ...st[kind] });
+const group = (name, color, rows, open, note, noteColor) => ({ name, color, open, folded: !open, count: rows.length, rows: open ? rows : [], minis: rows, chevron: open ? 'none' : 'rotate(-90deg)', note: note || '', noteColor: noteColor || 'rgba(255,255,255,0.5)' });
+return {
+groups: [
+group('Work', '#0A84FF', [
+row('claude-notch', 'Groups in the notch panel', '2 min', 'approval'),
+row('billing-service', 'Reconcile invoice totals', '14 min', 'work')
+], true, '1 needs you', '#FFB38F'),
+group('Open Source', '#30D158', [
+row('mobile-app', 'Dark mode polish', '7 min', 'stalled'),
+row('auth-service', 'Rotate session tokens', 'just now', 'work')
+], true),
+group('Study', '#BF5AF2', [
+row('docs-site', 'Rewrite getting started', '6 min', 'review')
+], true),
+group('Research', '#64D2FF', [
+row('papers', 'Survey notes', '3 min', 'work'),
+row('ml-pipeline', 'Eval sweep on new prompts', '1 min', 'approval'),
+row('evals', 'Eval sweep', '5 min', 'review')
+], false, '1 needs you', '#FFB38F'),
+group('Ungrouped', 'rgba(255,255,255,0.4)', [
+row('notes-app', 'Tag search', '40 min', 'idle')
+], false)
+]
+};
+}
+}
+</script>
+</body>
+</html>

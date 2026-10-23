@@ -1,0 +1,19 @@
+{
+  "cwd": "/Users/dev/src/earshot",
+  "effort": {
+    "level": "high"
+  },
+  "hook_event_name": "PreToolUse",
+  "mcp_server": "notion",
+  "permission_mode": "default",
+  "prompt_id": "b81f0d2a-5e63-4c7f-a1d9-2c4e8f7a9b10",
+  "scratchpad_dir": "/private/tmp/claude-501/-Users-dev-src-earshot/3f2b9c1e-7a44-4d0b-9e2f-5c1a8d6e4b70/scratchpad",
+  "session_id": "3f2b9c1e-7a44-4d0b-9e2f-5c1a8d6e4b70",
+  "tool_input": {
+    "query": "Earshot launch checklist",
+    "query_type": "internal"
+  },
+  "tool_name": "mcp__notion__notion-search",
+  "tool_use_id": "toolu_01NotionNotionNotionNoti",
+  "transcript_path": "/Users/dev/.claude/projects/-Users-dev-src-earshot/3f2b9c1e-7a44-4d0b-9e2f-5c1a8d6e4b70.jsonl"
+}

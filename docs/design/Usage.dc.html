@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Memory and CPU</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#D97757}a:hover{color:#E8957A}
+@keyframes es-spin{to{transform:rotate(360deg)}}
+.es-spin{animation:es-spin 6s linear infinite}
+.es-none{}
+.es-wall{background:radial-gradient(60% 80% at 15% 20%, #3B5BDB 0%, transparent 60%),radial-gradient(50% 70% at 85% 30%, #C2255C 0%, transparent 60%),radial-gradient(70% 80% at 60% 100%, #F08C00 0%, transparent 65%),#1A1B2E}
+.es-glass{background:rgba(30,30,34,0.52);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%)}
+.es-btn{background:rgba(255,255,255,0.1)}
+.es-btn:hover{background:rgba(255,255,255,0.16)}
+@keyframes es-hop{0%,62%,100%{transform:translateY(0)}70%{transform:translateY(-3px)}80%{transform:translateY(0)}86%{transform:translateY(-1.5px)}92%{transform:translateY(0)}}
+.es-hop{animation:es-hop 2.2s ease-in-out infinite}
+</style>
+</helmet>
+<div class="es-wall" style="width: 1200px; height: 820px; position: relative; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif; color: #FFFFFF">
+<div class="es-glass" style="position: absolute; left: 0; top: 0; width: 1200px; height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; box-sizing: border-box; font-size: 13px; color: rgba(255,255,255,0.92)">
+<div style="display: flex; gap: 20px; align-items: center"><span style="font-weight: 600">Terminal</span><span>Shell</span><span>Edit</span><span>View</span><span>Window</span></div>
+<div style="display: flex; gap: 16px; align-items: center"><span>Thu Oct 22</span><span>10:41 PM</span></div>
+</div>
+<div style="position: absolute; left: 466px; top: 0; width: 268px; height: 32px; background: #000000; border-radius: 0 0 11px 11px; display: flex; align-items: center; padding: 0 12px; box-sizing: border-box">
+<span style="width: 20px; height: 20px; border-radius: 50%; background: #1C1C1E; display: flex; align-items: center; justify-content: center"><svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#D97757" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span>
+</div>
+<div class="es-glass" style="position: absolute; left: 380px; top: 40px; width: 440px; border-radius: 26px; box-shadow: 0 0 0 0.5px rgba(255,255,255,0.18), 0 20px 50px rgba(0,0,0,0.35); padding: 8px; box-sizing: border-box; display: flex; flex-direction: column">
+<div style="display: flex; align-items: baseline; gap: 6px; height: 30px; padding: 6px 10px 0; box-sizing: border-box"><span style="font-size: 13px; font-weight: 600">Sessions</span><span style="font-size: 12px; color: rgba(255,255,255,0.55)">7</span></div>
+<sc-for list="{{rows}}" as="s" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 10px">
+<span style="width: 24px; height: 24px; border-radius: 50%; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; flex: none"><svg class="{{s.anim}}" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><g stroke="{{s.spark}}" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span>
+<span style="display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0">
+<span style="font-size: 13px; font-weight: 600">{{s.project}}</span>
+<span style="font-size: 11.5px; color: rgba(255,255,255,0.58); white-space: nowrap">{{s.phrase}}</span>
+</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 1px">
+<span style="font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums">{{s.mem}}</span>
+<span style="font-size: 11px; color: rgba(255,255,255,0.5); font-variant-numeric: tabular-nums">{{s.cpu}}</span>
+</span>
+</div>
+</sc-for>
+<div style="margin-top: 6px; background: rgba(255,255,255,0.08); border-radius: 20px; padding: 12px 12px 10px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 7px">
+<div style="display: flex; align-items: baseline; justify-content: space-between">
+<span style="font-size: 12.5px; font-weight: 600">Memory</span>
+<span style="font-size: 11.5px; color: rgba(255,255,255,0.6)">Pressure: normal</span>
+</div>
+<div style="display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: rgba(255,255,255,0.14); gap: 2px">
+<span style="width: 42%; background: rgba(255,255,255,0.92)"></span>
+<span style="width: 33%; background: rgba(255,255,255,0.5)"></span>
+</div>
+<div style="display: flex; gap: 14px; font-size: 11px; color: rgba(255,255,255,0.62); font-variant-numeric: tabular-nums">
+<span><span style="color: #FFFFFF; font-weight: 600">12</span> of 16 GB</span>
+<span>compressed 5.2 GB</span>
+<span>swap 5.6 GB</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 7px">
+<div style="display: flex; align-items: baseline; justify-content: space-between">
+<span style="font-size: 12.5px; font-weight: 600">CPU</span>
+<span style="font-size: 11.5px; color: rgba(255,255,255,0.6); font-variant-numeric: tabular-nums">17%</span>
+</div>
+<div style="display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: rgba(255,255,255,0.14)"><span style="width: 17%; background: rgba(255,255,255,0.92)"></span></div>
+</div>
+<div style="height: 0.5px; background: rgba(255,255,255,0.16)"></div>
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 24px; height: 24px; border-radius: 50%; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; flex: none"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#E8957A" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span>
+<span style="display: flex; flex-direction: column; gap: 1px; flex: 1">
+<span style="font-size: 12.5px; font-weight: 600">All Claude sessions</span>
+<span style="font-size: 11px; color: rgba(255,255,255,0.58)">31 processes incl. MCP servers and tools</span>
+</span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 1px; font-variant-numeric: tabular-nums">
+<span style="font-size: 12.5px; font-weight: 600">3.5 GB</span>
+<span style="font-size: 11px; color: rgba(255,255,255,0.55)">40% CPU</span>
+</span>
+</div>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; height: 34px; padding: 4px 2px 0">
+<button type="button" aria-label="Hide memory and CPU" class="es-btn" style="appearance: none; border: 0; margin: 0; font-family: inherit; font-size: inherit; color: inherit; text-align: left; cursor: default; display: flex; align-items: center; gap: 7px; height: 26px; padding: 0 9px; border-radius: 8px">
+<svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="#FFFFFF" stroke-width="1.9" stroke-linecap="round"><rect x="6" y="6" width="12" height="12" rx="2"></rect><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path></g></svg>
+<span style="font-size: 11.5px">12 of 16 GB</span>
+<svg width="10" height="10" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</button>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":820}}'>
+class Component extends DCLogic {
+renderVals() {
+return {
+rows: [
+{ project: 'claude-notch', phrase: 'Working · 3 min', mem: '651 MB', cpu: '16%', anim: 'es-spin', spark: '#FFFFFF' },
+{ project: 'auth-service', phrase: 'Working · just now', mem: '602 MB', cpu: '10%', anim: 'es-spin', spark: '#FFFFFF' },
+{ project: 'docs-site', phrase: 'Ready for review · 6 min', mem: '596 MB', cpu: '9%', anim: 'es-none', spark: '#E8957A' },
+{ project: 'notes-app', phrase: 'Idle · 40 min', mem: '352 MB', cpu: '0%', anim: 'es-none', spark: 'rgba(255,255,255,0.38)' }
+]
+};
+}
+}
+</script>
+</body>
+</html>

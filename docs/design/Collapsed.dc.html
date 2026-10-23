@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Collapsed notch</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#D97757}a:hover{color:#E8957A}
+@keyframes es-spin{to{transform:rotate(360deg)}}
+@keyframes es-breathe{0%,100%{opacity:.55}50%{opacity:1}}
+.es-spin{animation:es-spin 6s linear infinite}
+.es-breathe{animation:es-breathe 2.4s ease-in-out infinite}
+.es-none{}
+.es-wall{background:radial-gradient(60% 80% at 15% 20%, #3B5BDB 0%, transparent 60%),radial-gradient(50% 70% at 85% 30%, #C2255C 0%, transparent 60%),radial-gradient(70% 80% at 60% 100%, #F08C00 0%, transparent 65%),#1A1B2E}
+.es-glass{background:rgba(30,30,34,0.52);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%)}
+@keyframes es-hop{0%,62%,100%{transform:translateY(0)}70%{transform:translateY(-3px)}80%{transform:translateY(0)}86%{transform:translateY(-1.5px)}92%{transform:translateY(0)}}
+.es-hop{animation:es-hop 2.2s ease-in-out infinite}
+</style>
+</helmet>
+<div class="es-wall" style="width: 1200px; height: 220px; position: relative; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif; color: #F5F5F7">
+<div class="es-glass" style="position: absolute; left: 0; top: 0; width: 1200px; height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; box-sizing: border-box; font-size: 13px; color: rgba(255,255,255,0.92)">
+<div style="display: flex; gap: 20px; align-items: center"><span style="font-weight: 600">Terminal</span><span>Shell</span><span>Edit</span><span>View</span><span>Window</span></div>
+<div style="display: flex; gap: 16px; align-items: center"><span>Thu Oct 22</span><span>10:41 PM</span></div>
+</div>
+<div style="position: absolute; left: 456px; top: 0; width: 288px; height: 32px; background: #000000; border-radius: 0 0 11px 11px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; box-sizing: border-box">
+<div style="width: 22px; height: 22px; border-radius: 50%; background: #1C1C1E; display: flex; align-items: center; justify-content: center">
+<svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#D97757" stroke-width="2.8" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg>
+</div>
+<div style="display: flex; align-items: center; padding-left: 3px"><span style="position: relative; width: 18px; height: 18px; margin-left: -3px"><span class="es-none" style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid transparent"></span><span style="position: absolute; inset: 0; border-radius: 50%; background: #1C1C1E; box-shadow: 0 0 0 1.5px #000000; display: flex; align-items: center; justify-content: center"><svg class="es-spin" width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span></span><span style="position: relative; width: 18px; height: 18px; margin-left: -3px"><span class="es-none" style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid transparent"></span><span style="position: absolute; inset: 0; border-radius: 50%; background: #1C1C1E; box-shadow: 0 0 0 1.5px #000000; display: flex; align-items: center; justify-content: center"><svg class="es-spin" width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span></span><span class="es-hop" style="position: relative; width: 18px; height: 18px; margin-left: -3px"><span class="es-none" style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid transparent"></span><span style="position: absolute; inset: 0; border-radius: 50%; background: #1C1C1E; box-shadow: 0 0 0 1.5px #000000; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#D97757" stroke-width="3" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span></span><span style="position: relative; width: 18px; height: 18px; margin-left: -3px"><span class="es-none" style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid transparent"></span><span style="position: absolute; inset: 0; border-radius: 50%; background: #1C1C1E; box-shadow: 0 0 0 1.5px #000000; display: flex; align-items: center; justify-content: center"><svg class="es-breathe" width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><g stroke="rgba(255,255,255,0.75)" stroke-width="3" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span></span><span style="position: relative; width: 18px; height: 18px; margin-left: -3px"><span class="es-none" style="position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid transparent"></span><span style="position: absolute; inset: 0; border-radius: 50%; background: #1C1C1E; box-shadow: 0 0 0 1.5px #000000; display: flex; align-items: center; justify-content: center"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><g stroke="rgba(245,245,247,0.35)" stroke-width="3" stroke-linecap="round"><line x1="12" y1="3" x2="12" y2="21"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="5.6" y1="5.6" x2="18.4" y2="18.4"></line><line x1="18.4" y1="5.6" x2="5.6" y2="18.4"></line></g></svg></span></span></div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":220}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

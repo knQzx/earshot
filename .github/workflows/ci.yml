@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Xcode 26 (Liquid Glass)
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 26
+        run: |
+          xcode=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
+          sudo xcode-select -s "$xcode"
+          echo "using $xcode"
+
+      - name: Toolchain
+        run: |
+          swift --version
+          sdk=$(xcrun --sdk macosx --show-sdk-version)
+          echo "macOS SDK $sdk"
+          case "$sdk" in 2[6-9]*|[3-9][0-9]*) ;; *) echo "need the macOS 26 SDK, got $sdk" >&2; exit 1 ;; esac
+
+      - name: Build
+        run: make build CONFIG=debug
+
+      - name: Test
+        run: make test
+
+      - name: No network code
+        run: make check-no-network
+
+      - name: Size
+        run: make loc
+
+      - name: Universal app
+        run: UNIVERSAL=1 make app
+
+      - name: Signature
+        run: codesign --verify --strict --verbose=2 build/Earshot.app
+
+      - name: Zip
+        run: ditto -c -k --keepParent build/Earshot.app build/Earshot.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Earshot-${{ github.sha }}
+          path: build/Earshot.zip
+          if-no-files-found: error
+          retention-days: 14
+
+  older-sdk:
+    name: Xcode 16 (no Liquid Glass)
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode 16
+        run: |
+          xcode=$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)
+          sudo xcode-select -s "$xcode"
+          echo "using $xcode"
+
+      - name: Toolchain
+        run: |
+          swift --version
+          xcrun --sdk macosx --show-sdk-version
+
+      - name: Build
+        run: make build CONFIG=debug
+
+      - name: Release build
+        run: make build CONFIG=release
+
+      - name: Test
+        run: make test
